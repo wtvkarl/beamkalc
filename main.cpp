@@ -7,7 +7,7 @@
 	v 1.0:
 		- setup opengl and glfw in vs
 		- create window
-		- set up github pushing/committing
+		- set up github pushing/committing (done)
 
 */
 
