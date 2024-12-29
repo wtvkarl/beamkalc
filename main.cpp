@@ -2,14 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-/* VERSION NOTES 
-
-	v 1.0:
-		- setup opengl and glfw in vs
-		- create window
-		- set up github pushing/committing (done)
-
-*/
+#include "Triangle.h"
 
 int main()
 {
