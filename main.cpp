@@ -36,6 +36,12 @@ int main()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwSwapBuffers(window);
 
+	//test area
+
+	Triangle tri = Triangle();
+	tri.addVertex(1, 1, 1);
+	tri.printCoords();
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();

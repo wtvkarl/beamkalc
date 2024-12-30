@@ -14,9 +14,12 @@ void Triangle::addVertex(GLfloat x, GLfloat y, GLfloat z)
 
 void Triangle::printCoords()
 {
-	for (int i = 0; i < vertices.size(); i += 3) 
+	for (int i = 0; i < vertices.size(); i += 3)
 	{
-		std::cout << "[" << vertices.at(i) << ", " <<
-			vertices.at(i + 1) << ", " << vertices.at(i + 2) << "]\n";
+		printf("[%.2f, %.2f, %.2f]",
+			vertices.at(i),
+			vertices.at(i + 1),
+			vertices.at(i + 2)
+		);
 	}
 }
