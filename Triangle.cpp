@@ -16,10 +16,12 @@ void Triangle::printCoords()
 {
 	for (int i = 0; i < vertices.size(); i += 3)
 	{
-		printf("[%.2f, %.2f, %.2f]",
+		printf("[%.2f, %.2f, %.2f] ",
 			vertices.at(i),
 			vertices.at(i + 1),
 			vertices.at(i + 2)
 		);
+
+		printf("\n");
 	}
 }

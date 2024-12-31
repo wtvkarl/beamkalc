@@ -3,6 +3,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Triangle.h"
+#include "VBO.h"
+#include "Shader.h"
 
 int main()
 {
@@ -39,12 +41,30 @@ int main()
 	//test area
 
 	Triangle tri = Triangle();
-	tri.addVertex(1, 1, 1);
+	tri.addVertex(0.5, -0.5, 1);
+	tri.addVertex(0.5, 0.5, 1);
+	tri.addVertex(-0.5, -0.5, 1);
 	tri.printCoords();
+
+	Shader shaderProgram("Shaders/default.vert", "Shaders/default.frag");
+
+	GLuint VAO;
+	glGenVertexArrays(1, &VAO);
+
+	VBO VBO1(tri.vertices);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO1.ID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tri.vertices), tri.vertices.data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glUseProgram(shaderProgram.ID);
+	glBindVertexArray(VAO);
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
+		glDrawArrays(GL_TRIANGLES, 0, tri.vertices.size());
 	}
 
 	glfwDestroyWindow(window);
