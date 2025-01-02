@@ -1,2 +1,8 @@
-﻿  Triangle.cpp
+﻿  EBO.cpp
+  main.cpp
+C:\Users\kvill\source\repos\beamkalc_s\beamkalc\main.cpp(79,44): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  VAO.cpp
+C:\Users\kvill\source\repos\beamkalc_s\beamkalc\VAO.cpp(11,63): warning C4244: 'argument': conversion from 'GLsizeiptr' to 'GLsizei', possible loss of data
+  VBO.cpp
+  Generating Code...
   beamkalc.vcxproj -> C:\Users\kvill\source\repos\beamkalc_s\x64\Debug\beamkalc.exe

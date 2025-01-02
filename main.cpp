@@ -3,22 +3,32 @@
 #include <GLFW/glfw3.h>
 
 #include "Triangle.h"
-#include "VBO.h"
 #include "Shader.h"
+
+#include "VAO.h"
+#include "VBO.h"
+#include "EBO.h"
+
 
 int main()
 {
 	// ----- boilerplate start ----- //
-	glfwInit();
+	if (!glfwInit())
+	{
+		std::cout << "failed to initialize GLFW." << "\n";
+		glfwTerminate();
+		return -1;
+	}
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	GLFWwindow* window = glfwCreateWindow(
 		800,
 		800,
-		"beamkalc v1.0",
+		"beamkalc v1.0 by karl villapacibe",
 		NULL, NULL
 	);
 
@@ -32,6 +42,7 @@ int main()
 	glfwMakeContextCurrent(window);
 	gladLoadGL();
 	glViewport(0, 0, 800, 800);
+
 	// ----- boilerplate end ----- //
 
 	glClearColor(0.3f, 0.4f, 0.4f, 1.0f);
@@ -40,31 +51,33 @@ int main()
 
 	//test area
 
+	std::vector<GLuint> indices = {0,1,2};
+
 	Triangle tri = Triangle();
 	tri.addVertex(0.5, -0.5, 1);
 	tri.addVertex(0.5, 0.5, 1);
 	tri.addVertex(-0.5, -0.5, 1);
 	tri.printCoords();
 
+	VAO vao;
+
+	VBO vbo(tri.vertices);
+	EBO ebo(indices);
+
+	vao.linkAttrib(vbo, 0, 3, GL_FLOAT, sizeof(GLfloat), (void*)0);
+	vao.unbind();
+	vbo.unbind();
+	ebo.unbind();
+	
+
 	Shader shaderProgram("Shaders/default.vert", "Shaders/default.frag");
-
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-
-	VBO VBO1(tri.vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO1.ID);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tri.vertices), tri.vertices.data(), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	glUseProgram(shaderProgram.ID);
-	glBindVertexArray(VAO);
 
 	while (!glfwWindowShouldClose(window))
 	{
+		shaderProgram.activate();
+		vao.bind();
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 		glfwPollEvents();
-		glDrawArrays(GL_TRIANGLES, 0, tri.vertices.size());
 	}
 
 	glfwDestroyWindow(window);

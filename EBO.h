@@ -1,17 +1,19 @@
-#ifndef VBO_CLASS_H
-#define VBO_CLASS_H
+#ifndef EBO_CLASS_H
+#define EBO_CLASS_H
 
 #include <glad/glad.h>
 #include <vector>
 
-class VBO
+class EBO
 {
 public:
 	GLuint ID;
-	VBO(std::vector<GLfloat> vertices);
+	EBO(std::vector<GLuint>& indices);
+	
 	void bind();
 	void unbind();
 	void discard();
+
 };
 
-#endif VBO_CLASS_H
+#endif EBO_CLASS_H
